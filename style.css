@@ -1,0 +1,44 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  word-spacing: 4px;
+}
+label {
+  display: block;
+  padding: 1%;
+}
+input {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3em;
+  padding: 1%;
+}
+
+a {
+  text-align: right;
+  display: block;
+}
+ul {
+  padding: 0;
+}
+div {
+  margin: 5%;
+  padding: none;
+}
+li {
+  text-transform: uppercase;
+  list-style: none;
+  padding: 1%;
+  margin: 1%;
+  border: 1px solid #111;
+  border-radius: 5px;
+}
+.no-repo {
+  color: red;
+}
+.error-message {
+  visibility: hidden;
+}
