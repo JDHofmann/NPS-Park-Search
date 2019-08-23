@@ -21,7 +21,7 @@ function getParks(stateOneInput, stateTwoInput, maxResults) {
   }
   let queryString = formatQuery(params);
   queryString += watchSecondInput(stateTwoInput);
-  const url = baseUrl + '?' + queryString + '&api_key=' + apiKey; 
+  const url = baseUrl + '?' + queryString + '&api_key=' + apiKey;
   // console.log(url);
 
 /*
@@ -31,7 +31,7 @@ function getParks(stateOneInput, stateTwoInput, maxResults) {
   };
 */
 
-  fetch(url, header)
+  fetch(url)
     .then(response => {
       // check to see if response 200 ok
       if (response.ok) {
@@ -63,7 +63,7 @@ function displayStates(stateOneInput, stateTwoInput) {
 }
 
 function displayResults(responseJson, maxResults, stateOneInput, stateTwoInput){
-  // console.log(responseJson);
+  console.log(responseJson);
   $('.results').empty();
   console.log(stateOneInput);
   let states = displayStates(stateOneInput, stateTwoInput);
