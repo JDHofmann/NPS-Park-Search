@@ -42,30 +42,49 @@ function getParks(stateOneInput, stateTwoInput, maxResults) {
       throw new Error(response.statusText);
     })
     .then(responseJson =>
-      displayResults(responseJson, maxResults)
+      displayResults(responseJson, maxResults, stateOneInput, stateTwoInput)
     )
     .catch( err => {
       $('.error-message').text(`Something went wrong: ${err.message}`);
     });
-    //console.log(responseJson);
+    // return stateOneInput, stateTwoInput;
 }
 
-function displayResults(responseJson, maxResults){
-  console.log(responseJson);
+function displayStates(stateOneInput, stateTwoInput) {
+
+  if (stateTwoInput == '') {
+    return stateOneInput.toUpperCase();
+  } else if (stateOneInput == '') {
+    return stateTwoInput.toUpperCase();
+  }
+    else {
+      let firstState = stateOneInput.toUpperCase();
+      let secondState = stateTwoInput.toUpperCase();
+      return `${firstState} & ${secondState}`;
+    }
+}
+
+function displayResults(responseJson, maxResults, stateOneInput, stateTwoInput){
+  // console.log(responseJson);
   $('.results').empty();
+  console.log(stateOneInput);
+  let states = displayStates(stateOneInput, stateTwoInput);
+  $('.results').append(`<h3>Showing Results For: ${states}</h3>`)
   if (responseJson.data.length === 0) {
     $('.results').append(`
-      <li class="not-state">*That is not a state*<br>
+      <li class="not-state">* That is not currently a state *<br>
       make sure your using the correct two letter state code</li>
       `);
   }
-    for (let i = 0; i < responseJson.data.length & i < maxResults ; i++){
+
+    for (let i = 0; i < responseJson.data.length & i < maxResults ; i++) {
     $('.results').append(
         `<li><h3 class="park-name">${responseJson.data[i].fullName}</h3>
         <p>${responseJson.data[i].description}</p>
         <a target="_blank" href="${responseJson.data[i].url}">Website</a>
         </li>`
       )};
+
   //display the results section
   //$('.results').css('visibility','visible');
 

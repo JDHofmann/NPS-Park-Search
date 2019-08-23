@@ -9,14 +9,16 @@
     <title>Github Repo Search</title>
   </head>
   <body>
-    <h1>Find a park anywhere in the US</h1>
+    <h1>Find a national park anywhere in the US</h1>
     <form class="" action="index.html" method="post">
-      <label for="state-search">State One</label>
-      <input class="state-search" type="text" name="state-search" placeholder="NY">
-      <label for="state-search2">State Two</label>
-      <input class="state-search2" type="text" name="state-search2" placeholder="">
-      <label for="max-results">Maximum results to return</label>
-      <input type="number" name="max-results" class="max-results-input" value="10">
+      <label for="state-search">State</label>
+      <label for="state-search2">State 2<br><span>(optional)</span></label>
+      <label for="max-results">Results</label>
+      <input class="grid state-search" type="text" name="state-search" placeholder="NY">
+
+      <input class="grid state-search2" type="text" name="state-search2" placeholder="">
+
+      <input type="number" name="max-results" class="grid max-results-input" value="10">
       <input class="search" type="submit" value="Search">
     </form>
       <h2 class="result-states"></h2>
