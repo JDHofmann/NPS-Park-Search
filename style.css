@@ -45,6 +45,7 @@ input {
   text-align: center;
   text-transform: uppercase;
   margin: 2.5% auto;
+  padding: 1%;
 }
 a {
   text-align: center;
@@ -57,6 +58,9 @@ ul {
 div {
   margin: 5%;
   padding: none;
+}
+.results-title {
+  text-align: center;
 }
 .park-name {
   text-decoration: underline;

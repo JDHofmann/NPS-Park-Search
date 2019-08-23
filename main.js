@@ -5,7 +5,6 @@ const baseUrl = 'https://developer.nps.gov/api/v1/parks';
 
 function formatQuery(params) {
   const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
-  // console.log(queryItems);
   return queryItems.join('&');
 }
 
@@ -16,23 +15,23 @@ function watchSecondInput(stateTwoInput) {
 }
 
 function getParks(stateOneInput, stateTwoInput, maxResults) {
-  // console.log(stateOneInput, stateTwoInput, maxResultsInput);
   const params = {
     stateCode: stateOneInput,
     limit: maxResults
   }
   let queryString = formatQuery(params);
   queryString += watchSecondInput(stateTwoInput);
-  const url = baseUrl + '?' + queryString + '&api_key=' + apiKey;
-  console.log(url);
+  const url = baseUrl + '?' + queryString + '&api_key=' + apiKey; 
+  // console.log(url);
+
 /*
   const options = {
     headers: new Headers({
-      "x-api-key": apiKey
-    })
+      "X-Api-Key": "eBJcwyRyTdY3wgglRVTiMZ2oYkak7hnnHAp9C8d6" })
   };
-  */
-  fetch(url)
+*/
+
+  fetch(url, header)
     .then(response => {
       // check to see if response 200 ok
       if (response.ok) {
@@ -47,7 +46,6 @@ function getParks(stateOneInput, stateTwoInput, maxResults) {
     .catch( err => {
       $('.error-message').text(`Something went wrong: ${err.message}`);
     });
-    // return stateOneInput, stateTwoInput;
 }
 
 function displayStates(stateOneInput, stateTwoInput) {
@@ -69,7 +67,7 @@ function displayResults(responseJson, maxResults, stateOneInput, stateTwoInput){
   $('.results').empty();
   console.log(stateOneInput);
   let states = displayStates(stateOneInput, stateTwoInput);
-  $('.results').append(`<h3>Showing Results For: ${states}</h3>`)
+  $('.results').append(`<h3 class="results-title">Showing Results For: ${states}</h3>`)
   if (responseJson.data.length === 0) {
     $('.results').append(`
       <li class="not-state">* That is not currently a state *<br>
@@ -84,18 +82,12 @@ function displayResults(responseJson, maxResults, stateOneInput, stateTwoInput){
         <a target="_blank" href="${responseJson.data[i].url}">Website</a>
         </li>`
       )};
-
-  //display the results section
-  //$('.results').css('visibility','visible');
-
 }
 
 function watchForm() {
-  // console.log('`watchForm` has run')
   $('form').submit(
     function(event) {
       event.preventDefault();
-      // console.log('form has been submitted');
       const stateOneInput = $('.state-search').val().toLowerCase();
       const stateTwoInput = $('.state-search2').val();
       const maxResults = $('.max-results-input').val();
