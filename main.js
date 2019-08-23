@@ -63,9 +63,9 @@ function displayStates(stateOneInput, stateTwoInput) {
 }
 
 function displayResults(responseJson, maxResults, stateOneInput, stateTwoInput){
-  console.log(responseJson);
+  // console.log(responseJson);
   $('.results').empty();
-  console.log(stateOneInput);
+  // console.log(stateOneInput);
   let states = displayStates(stateOneInput, stateTwoInput);
   $('.results').append(`<h3 class="results-title">Showing Results For: ${states}</h3>`)
   if (responseJson.data.length === 0) {
