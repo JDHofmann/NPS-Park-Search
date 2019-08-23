@@ -12,21 +12,63 @@ function formatQuery(params) {
 function watchSecondInput(stateTwoInput) {
   if (stateTwoInput !== '') {
     return '&' + encodeURIComponent('stateCode') + '=' + encodeURIComponent(stateTwoInput)
-    console.log('watchSecondInput found a value');
   } return '';
-  console.log('watchSecondInput did not find a value');
 }
 
-function getParks(stateOneInput, stateTwoInput, maxResultsInput) {
+function getParks(stateOneInput, stateTwoInput, maxResults) {
   // console.log(stateOneInput, stateTwoInput, maxResultsInput);
   const params = {
     stateCode: stateOneInput,
-    limit: maxResultsInput
+    limit: maxResults
   }
   let queryString = formatQuery(params);
   queryString += watchSecondInput(stateTwoInput);
-  console.log(queryString);
-  //return queryString;
+  const url = baseUrl + '?' + queryString + '&api_key=' + apiKey;
+  console.log(url);
+/*
+  const options = {
+    headers: new Headers({
+      "x-api-key": apiKey
+    })
+  };
+  */
+  fetch(url)
+    .then(response => {
+      // check to see if response 200 ok
+      if (response.ok) {
+        return response.json();
+      }
+      // if not throw to error
+      throw new Error(response.statusText);
+    })
+    .then(responseJson =>
+      displayResults(responseJson, maxResults)
+    )
+    .catch( err => {
+      $('.error-message').text(`Something went wrong: ${err.message}`);
+    });
+    //console.log(responseJson);
+}
+
+function displayResults(responseJson, maxResults){
+  console.log(responseJson);
+  $('.results').empty();
+  if (responseJson.data.length === 0) {
+    $('.results').append(`
+      <li class="not-state">*That is not a state*<br>
+      make sure your using the correct two letter state code</li>
+      `);
+  }
+    for (let i = 0; i < responseJson.data.length & i < maxResults ; i++){
+    $('.results').append(
+        `<li><h3 class="park-name">${responseJson.data[i].fullName}</h3>
+        <p>${responseJson.data[i].description}</p>
+        <a target="_blank" href="${responseJson.data[i].url}">Website</a>
+        </li>`
+      )};
+  //display the results section
+  //$('.results').css('visibility','visible');
+
 }
 
 function watchForm() {
@@ -37,8 +79,8 @@ function watchForm() {
       // console.log('form has been submitted');
       const stateOneInput = $('.state-search').val().toLowerCase();
       const stateTwoInput = $('.state-search2').val();
-      const maxResultsInput = $('.max-results-input').val();
-      getParks(stateOneInput, stateTwoInput, maxResultsInput);
+      const maxResults = $('.max-results-input').val();
+      getParks(stateOneInput, stateTwoInput, maxResults);
     }
   );
 }
